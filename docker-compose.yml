@@ -1,0 +1,55 @@
+version: "3.1"
+
+name: secure-coding-project-db
+networks:
+    db-net:
+        driver: bridge
+services:
+    postgres:
+        image: postgres
+        container_name: postgres
+        environment:
+            POSTGRES_USER: tutorial
+            POSTGRES_DB: iam
+            POSTGRES_PASSWORD: privatepassword
+        expose:
+            - 22
+        ports:
+            - 127.0.0.1:5432:5432
+        volumes:
+            - ./docker/postgres:/var/lib/postgresql/data
+        networks:
+            - db-net
+
+    pgadmin:
+        image: dpage/pgadmin4
+        container_name: pgadmin
+        links:
+            - postgres
+        environment:
+            PGADMIN_DEFAULT_EMAIL: admin@admin.com
+            PGADMIN_DEFAULT_PASSWORD: privatepassword
+        ports:
+            - 127.0.0.1:8000:80
+        networks:
+            - db-net
+
+    debian:
+        image: debian:latest
+        container_name: backup_services
+        volumes:
+            - ./docker/backup_services:/backup_services
+        restart: unless-stopped
+        tty: true
+        networks:
+            - db-net
+
+    sftp:
+        image: "debian:latest"
+        container_name: sftp
+        volumes:
+            - ./docker/sftp/backups:/backups
+        restart: unless-stopped
+        tty: true
+        networks:
+            - db-net

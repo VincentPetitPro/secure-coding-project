@@ -1,0 +1,1 @@
+pg_pwd -h 192.168.80.3 -U tutorial -d iam -f ./iam_db-20-02-23.sql
