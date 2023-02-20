@@ -53,3 +53,13 @@ services:
         tty: true
         networks:
             - db-net
+
+    secure-coding-app:
+        image: secure-coding-app
+        container_name: app
+        restart: unless-stopped
+        tty: true
+        ports:
+            - 8080:8080
+        networks:
+            - db-net
