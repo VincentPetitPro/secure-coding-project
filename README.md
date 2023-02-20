@@ -16,7 +16,7 @@ service ssh restart
 On backup_services
 You may have to change the IP addresses of the postgres server and the sftp server due to DHCP policy.
 You should first establish a SSH connection from back_services to the postgres and sftp container in order for them to add this container to their known host list.
-If you have trouble with "Host key verification failed" error, please empty the known host list file from /root/.ssh on the target (postgres/sftp).
+If you have trouble with "Host key verification failed" error, please empty the known host list file from /root/.ssh on the target (postgres/sftp) or with `ssh-keygen -R <HOST_IP>`
 
 ## Creating the app docker image
 
