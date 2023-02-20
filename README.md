@@ -28,3 +28,10 @@ In app folder with docker file in it `docker build -t secure-coding-app .`
 Use public key authentification for ssh/sftp as it is far more secure than just passing a password from a file to a command.
 Here the sftp server is just a container, please use a remote host as another server or a s3 instance.
 Here we use the script postgres.sh to backup the dabatase. This action should be automated as a cron job to backup on a regular basis.
+
+## Problem to fix
+
+-   Add incremental backups covering small downtime
+-   Too much disk I/O with pg_dump/gpg ; pipe to backup_servicers the compressed result of pg_dump via SSL and gpg it on backup_services.
+-   Credentials on a separate volume with 25 char.
+-   Make Dockerfile for custom images instead of using an init.sh
